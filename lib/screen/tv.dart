@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:watcha_pedia_clone/component/footer.dart';
 import 'package:watcha_pedia_clone/component/main_app_bar.dart';
 
 class TVScreen extends StatelessWidget {
@@ -13,6 +14,7 @@ class TVScreen extends StatelessWidget {
         child: MainAppBar(),
       ),
       body: Text("TV"),
+      bottomNavigationBar: Footer(),
     ));
   }
 }

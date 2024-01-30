@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:watcha_pedia_clone/component/footer.dart';
 import 'package:watcha_pedia_clone/component/main_app_bar.dart';
 
 class MovieScreen extends StatelessWidget {
@@ -8,11 +9,11 @@ class MovieScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(73),
-        child: MainAppBar(),
-      ),
-      body: Text("Movie"),
-    ));
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(73),
+              child: MainAppBar(),
+            ),
+            body: Text("Movie"),
+            bottomNavigationBar: Footer()));
   }
 }
