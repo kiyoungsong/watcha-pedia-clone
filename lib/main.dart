@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:watcha_pedia_clone/component/main_app_bar.dart';
 import 'package:watcha_pedia_clone/screen/movie.dart';
+import 'package:watcha_pedia_clone/screen/search.dart';
 import 'package:watcha_pedia_clone/screen/tv.dart';
 
 void main() {
@@ -18,6 +18,7 @@ final GoRouter _router =
     path: "/tv",
     builder: (context, state) => const TVScreen(),
   ),
+  GoRoute(path: "/search", builder: (context, state) => const SearchScreen())
 ]);
 
 class MyApp extends StatelessWidget {
