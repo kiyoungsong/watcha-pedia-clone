@@ -1,20 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:watcha_pedia_clone/theme/colors.dart';
 
 class Footer extends StatelessWidget {
+  final int currentPageIndex = 0;
   const Footer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: "홈"),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: "검색"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline), label: "로그인"),
-        ],
-        currentIndex: _calculateSelectedIndex(context),
-        onTap: (int index) => _onItemTapped(index, context));
+    return Container(
+      height: 56,
+      decoration:
+          BoxDecoration(border: Border(top: BorderSide(color: borderGray))),
+      child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          selectedItemColor: Colors.black,
+          selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+          unselectedFontSize: 11.5,
+          selectedFontSize: 11.5,
+          unselectedItemColor: baseGray,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: getIcon("home"), label: "홈"),
+            BottomNavigationBarItem(icon: getIcon("search"), label: "검색"),
+            BottomNavigationBarItem(icon: getIcon("user"), label: "로그인"),
+          ],
+          currentIndex: _calculateSelectedIndex(context),
+          onTap: (int index) => _onItemTapped(index, context)),
+    );
+  }
+
+  Widget getIcon(String key) {
+    String basePath = "assets/icons";
+    return Container(
+      padding: EdgeInsets.only(bottom: 3),
+      width: 24,
+      child: SvgPicture.asset("$basePath/$key.svg"),
+    );
   }
 
   int _calculateSelectedIndex(BuildContext context) {
@@ -39,44 +62,3 @@ class Footer extends StatelessWidget {
     }
   }
 }
-
-// class Footer extends StatelessWidget {
-//   const Footer({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     double screenWidth = MediaQuery.of(context).size.width;
-//     double paddingPercentage = 0.24;
-//     double padding = screenWidth * paddingPercentage;
-//     return Container(
-//         height: 56,
-//         padding: EdgeInsets.fromLTRB(padding, 0, padding, 0),
-//         decoration: BoxDecoration(
-//             border: Border(
-//                 top: BorderSide(
-//                     color: Color.fromARGB(255, 210, 210, 210), width: 1.0))),
-//         child: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             FooterIcon(
-//               title: "홈",
-//               icon: Icons.home_outlined,
-//               pathKey: ["movie", "tv"],
-//               onClick: () => context.go("/movie"),
-//             ),
-//             FooterIcon(
-//               title: "검색",
-//               icon: Icons.search,
-//               pathKey: ["search"],
-//               onClick: () => context.go("/search"),
-//             ),
-//             FooterIcon(
-//               title: "로그인",
-//               icon: Icons.person_outline,
-//               pathKey: ["login"],
-//               onClick: () => context.go("/login"),
-//             ),
-//           ],
-//         ));
-//   }
-// }
