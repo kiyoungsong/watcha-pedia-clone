@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CustomTextField extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           color: Color.fromARGB(255, 245, 245, 245)),
       child: Row(
         children: [
-          Icon(Icons.search),
+          SvgPicture.asset("assets/icons/search.svg"),
           SizedBox(width: 9),
           Expanded(
               child: TextField(
