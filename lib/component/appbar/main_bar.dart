@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class MainAppBar extends StatelessWidget {
-  const MainAppBar({super.key});
+class MainBar extends StatelessWidget {
+  const MainBar({super.key});
   @override
   Widget build(BuildContext context) {
     String currentUrl = GoRouterState.of(context).uri.toString();
@@ -18,11 +18,11 @@ class MainAppBar extends StatelessWidget {
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: () {
-                    context.go("/movie");
+                    context.go("/");
                   },
                   child: Text(
                     "영화",
-                    style: getStyle(currentUrl, "movie"),
+                    style: getStyle(currentUrl, "/"),
                   ),
                 ),
               ),
@@ -45,7 +45,7 @@ class MainAppBar extends StatelessWidget {
                   },
                   child: Text(
                     "TV",
-                    style: getStyle(currentUrl, "tv"),
+                    style: getStyle(currentUrl, "/tv"),
                   ),
                 ),
               )
@@ -61,8 +61,6 @@ class MainAppBar extends StatelessWidget {
         fontSize: 27,
         height: 1);
 
-    return url.contains(key)
-        ? commonStyle.copyWith(color: Colors.black)
-        : commonStyle;
+    return url == key ? commonStyle.copyWith(color: Colors.black) : commonStyle;
   }
 }
