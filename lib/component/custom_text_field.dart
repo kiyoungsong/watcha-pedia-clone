@@ -1,36 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CustomTextField extends StatefulWidget {
+final searchTextProvider = StateProvider((ref) => '');
+
+class CustomTextField extends ConsumerWidget {
+  final controller = TextEditingController();
+  CustomTextField({super.key});
+
   @override
-  State<CustomTextField> createState() => _CustomTextFieldState();
-}
-
-class _CustomTextFieldState extends State<CustomTextField> {
-  TextEditingController _controller = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final searchText = ref.watch(searchTextProvider);
     return Expanded(
         child: Container(
       height: 44,
       width: double.infinity,
-      padding: EdgeInsets.fromLTRB(9, 12, 17, 12),
+      padding: const EdgeInsets.fromLTRB(9, 12, 17, 12),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
-          color: Color.fromARGB(255, 245, 245, 245)),
+          color: const Color.fromARGB(255, 245, 245, 245)),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset("assets/icons/search.svg"),
-          SizedBox(width: 9),
+          const SizedBox(width: 9),
           Expanded(
               child: TextField(
-            controller: _controller,
+            onChanged: (value) {
+              ref.read(searchTextProvider.notifier).state = value;
+            },
+            controller: controller,
             decoration: InputDecoration(
-                border: UnderlineInputBorder(borderSide: BorderSide.none),
+                border: const UnderlineInputBorder(borderSide: BorderSide.none),
                 hintText: "콘텐츠, 인물, 컬렉션을 검색해주세요.",
                 hintStyle:
-                    TextStyle(color: Color.fromARGB(255, 160, 160, 160))),
+                    const TextStyle(color: Color.fromARGB(255, 160, 160, 160)),
+                suffixIcon: searchText != ""
+                    ? IconButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          controller.clear();
+                        },
+                        icon: const Icon(
+                          Icons.cancel,
+                          color: Color.fromARGB(255, 160, 160, 160),
+                        ),
+                        iconSize: 20,
+                      )
+                    : null),
           )),
         ],
       ),
