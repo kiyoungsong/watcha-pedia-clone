@@ -1,55 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:watcha_pedia_clone/component/scaffold/scaffold_with_header_nav.dart';
-import 'package:watcha_pedia_clone/component/scaffold/scaffold_with_search_nav.dart';
-import 'package:watcha_pedia_clone/screen/movie.dart';
-import 'package:watcha_pedia_clone/screen/search.dart';
-import 'package:watcha_pedia_clone/screen/tv.dart';
+import 'package:watcha_pedia_clone/router/router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(
+    child: MyApp(),
+  ));
 }
 
-final GlobalKey<NavigatorState> _rootNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'root');
-final GlobalKey<NavigatorState> _shellNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'shell');
-
-final GoRouter _router = GoRouter(
-    initialLocation: "/",
-    navigatorKey: _rootNavigatorKey,
-    routes: <RouteBase>[
-      ShellRoute(
-          navigatorKey: _shellNavigatorKey,
-          builder: (context, state, child) => SaffoldWithHeaderNav(
-                child: child,
-              ),
-          routes: [
-            GoRoute(
-                path: "/", builder: (context, state) => const MovieScreen()),
-            GoRoute(
-              path: "/tv",
-              builder: (context, state) => const TVScreen(),
-            )
-          ]),
-      ShellRoute(
-          builder: (context, state, child) =>
-              SaffoldWithSearchNav(child: child),
-          routes: <RouteBase>[
-            GoRoute(
-              path: "/search",
-              builder: (context, state) => const SearchScreen(),
-            )
-          ])
-    ]);
-
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _router,
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    GoRouter router = ref.watch(routerProvider);
+    return MaterialApp.router(routerConfig: router);
   }
 }
+
+final responseProvider = StateProvider((ref) => 'response');
