@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:watcha_pedia_clone/component/appbar/main_bar.dart';
+import 'package:watcha_pedia_clone/component/appbar/search_bar.dart';
 import 'package:watcha_pedia_clone/component/footer/footer.dart';
 
 class SaffoldWithHeaderNav extends StatelessWidget {
@@ -7,11 +9,14 @@ class SaffoldWithHeaderNav extends StatelessWidget {
   const SaffoldWithHeaderNav({required this.child, super.key});
   @override
   Widget build(BuildContext context) {
+    final bool isSearched =
+        GoRouterState.of(context).uri.toString() == "/search";
+
     return SafeArea(
         child: Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(73),
-        child: MainBar(),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(73),
+        child: isSearched ? const SearchAppBar() : const MainBar(),
       ),
       body: child,
       bottomNavigationBar: const Footer(),
