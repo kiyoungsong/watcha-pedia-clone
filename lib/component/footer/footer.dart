@@ -9,47 +9,58 @@ class Footer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int currentIndex = _calculateSelectedIndex(context);
     return Container(
       height: 56,
-      decoration:
-          BoxDecoration(border: Border(top: BorderSide(color: borderGray))),
+      decoration: const BoxDecoration(
+          border: Border(top: BorderSide(color: borderGray))),
       child: BottomNavigationBar(
           backgroundColor: Colors.white,
           elevation: 0,
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
           selectedItemColor: Colors.black,
-          selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
           unselectedFontSize: 11.5,
           selectedFontSize: 11.5,
-          unselectedItemColor: baseGray,
           items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: getIcon("home"), label: "홈"),
-            BottomNavigationBarItem(icon: getIcon("search"), label: "검색"),
-            BottomNavigationBarItem(icon: getIcon("user"), label: "로그인"),
+            BottomNavigationBarItem(
+                icon: getIcon("home", currentIndex == 0), label: "홈"),
+            BottomNavigationBarItem(
+                icon: getIcon("search", currentIndex == 1), label: "검색"),
+            BottomNavigationBarItem(
+                icon: getIcon("user", currentIndex == 2), label: "로그인"),
           ],
-          currentIndex: _calculateSelectedIndex(context),
+          currentIndex: currentIndex,
           onTap: (int index) => _onItemTapped(index, context)),
     );
   }
 
-  Widget getIcon(String key) {
+  Widget getIcon(String key, bool selected) {
     String basePath = "assets/icons";
     return Container(
-      padding: EdgeInsets.only(bottom: 3),
+      padding: const EdgeInsets.only(bottom: 3),
       width: 24,
-      child: SvgPicture.asset("$basePath/$key.svg"),
+      child: SvgPicture.asset(
+        "$basePath/$key.svg",
+        colorFilter: ColorFilter.mode(
+            selected ? Colors.black : baseGray, BlendMode.srcIn),
+      ),
     );
   }
 
   int _calculateSelectedIndex(BuildContext context) {
     final String location = GoRouterState.of(context).uri.toString();
-    if (location.startsWith("/")) {
-      return 0;
+
+    if (location == "/login") {
+      return 2;
     }
 
-    if (location.startsWith("/search")) {
+    if (location == "/search") {
       return 1;
     }
 
+    if (location == "/") {
+      return 0;
+    }
     return 0;
   }
 
@@ -59,6 +70,8 @@ class Footer extends StatelessWidget {
         GoRouter.of(context).go('/');
       case 1:
         GoRouter.of(context).go('/search');
+      case 2:
+        GoRouter.of(context).go('/login');
     }
   }
 }
