@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:watcha_pedia_clone/component/movie_section.dart';
+import 'package:watcha_pedia_clone/model/movie.dart';
+import 'package:watcha_pedia_clone/service/movie_list_service.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -17,61 +22,35 @@ class MovieScreen extends StatefulWidget {
 }
 
 class _MovieScreenState extends State<MovieScreen> {
+  late Future<Map<KeyEnum, List<MovieModel>>> movieList;
+
+  @override
+  void initState() {
+    super.initState();
+    movieList = MovieListService().getMovieList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Text(
-          "현재상영중",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Container(
-          width: double.infinity,
-          child: CarouselSlider.builder(
-              itemCount: (imgList.length / 3).round(),
-              itemBuilder: (context, index, realIndex) {
-                final int first = index * 3;
-                final int second = first + 1;
-                final int third = first + 2;
-                return Row(
-                  children: [first, second, third].map((idx) {
-                    return Expanded(
-                        child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 5),
-                            Image.network(imgList[idx], fit: BoxFit.fill),
-                            Text(
-                              "dddfdsfdsfdsfsfdfdsfsfdfdsfadfdsfs",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14),
-                            ),
-                            Text(
-                              "평점⭐3.5",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14),
-                            )
-                          ]),
-                    ));
-                  }).toList(),
-                );
-              },
-              options: CarouselOptions(
-                  padEnds: false,
-                  enlargeCenterPage: false,
-                  viewportFraction: 1,
-                  enableInfiniteScroll: false,
-                  pageSnapping: false)),
-        ),
-      ]),
+    return FutureBuilder(
+      future: movieList,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        } else {
+          Map<KeyEnum, List<MovieModel>> movieList = snapshot.data!;
+          return ListView(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            children: <Widget>[
+              MovieSection(list: movieList[KeyEnum.nowPlaying] ?? [])
+            ],
+          );
+        }
+      },
     );
   }
 }

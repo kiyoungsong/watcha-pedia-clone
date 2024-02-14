@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:watcha_pedia_clone/dataprovider/data_provider.dart';
+import 'package:watcha_pedia_clone/provider/data_provider.dart';
 import 'package:watcha_pedia_clone/model/keyword.dart';
 
 class SearchScreen extends ConsumerWidget {
