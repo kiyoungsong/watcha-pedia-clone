@@ -9,9 +9,7 @@ class KeyworldService {
     if (query != "") {
       Response response = await get(
           Uri.parse("$baseUrl/3/search/keyword?query=$query&page1"),
-          headers: {
-            'authorization': baseToken,
-          });
+          headers: baseHeaders);
 
       if (response.statusCode == 200) {
         final List result = jsonDecode(response.body)['results'];
