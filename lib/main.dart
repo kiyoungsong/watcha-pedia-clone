@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:watcha_pedia_clone/router/router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -15,7 +16,9 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     GoRouter router = ref.watch(routerProvider);
-    return MaterialApp.router(routerConfig: router);
+    return MaterialApp.router(
+        routerConfig: router,
+        theme: ThemeData(textTheme: GoogleFonts.notoSansTextTheme()));
   }
 }
 
