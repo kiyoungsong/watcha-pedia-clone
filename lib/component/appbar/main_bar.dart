@@ -59,7 +59,7 @@ class MainBar extends StatelessWidget {
         color: Color.fromARGB(255, 165, 165, 170),
         fontWeight: FontWeight.bold,
         fontSize: 27,
-        height: 1);
+        height: 1.4);
 
     return url == key ? commonStyle.copyWith(color: Colors.black) : commonStyle;
   }
