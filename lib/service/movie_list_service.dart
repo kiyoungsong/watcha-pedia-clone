@@ -10,7 +10,9 @@ class MovieListService {
   Future<Map<KeyEnum, List<MovieModel>>> getMovieList() async {
     final response = await Future.wait([
       get(Uri.parse("$baseUrl/3/movie/now_playing"), headers: baseHeaders),
-      get(Uri.parse("$baseUrl/3/movie/popular"), headers: baseHeaders)
+      get(Uri.parse("$baseUrl/3/movie/popular"), headers: baseHeaders),
+      get(Uri.parse("$baseUrl/3/movie/top_rated"), headers: baseHeaders),
+      get(Uri.parse("$baseUrl/3/movie/upcoming"), headers: baseHeaders)
     ]);
     Map<KeyEnum, List<MovieModel>> list = {
       KeyEnum.nowPlaying: [],

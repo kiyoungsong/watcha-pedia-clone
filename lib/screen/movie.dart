@@ -44,9 +44,24 @@ class _MovieScreenState extends State<MovieScreen> {
         } else {
           Map<KeyEnum, List<MovieModel>> movieList = snapshot.data!;
           return ListView(
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             children: <Widget>[
-              MovieSection(list: movieList[KeyEnum.nowPlaying] ?? [])
+              MovieSection(
+                list: movieList[KeyEnum.nowPlaying] ?? [],
+                keyword: KeyEnum.nowPlaying,
+              ),
+              MovieSection(
+                list: movieList[KeyEnum.popular] ?? [],
+                keyword: KeyEnum.popular,
+              ),
+              MovieSection(
+                list: movieList[KeyEnum.topRated] ?? [],
+                keyword: KeyEnum.topRated,
+              ),
+              MovieSection(
+                list: movieList[KeyEnum.upcoming] ?? [],
+                keyword: KeyEnum.upcoming,
+              )
             ],
           );
         }
