@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:watcha_pedia_clone/model/video.dart';
 import 'package:watcha_pedia_clone/service/meta.dart';
@@ -23,7 +24,7 @@ class BoxSlider extends StatelessWidget {
           height: 211,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            children: makeBoxWidget(list),
+            children: makeBoxWidget(context, list),
           ),
         ),
         SizedBox(height: 20),
@@ -32,11 +33,13 @@ class BoxSlider extends StatelessWidget {
   }
 }
 
-List<Widget> makeBoxWidget(List<VideoModel> list) {
+List<Widget> makeBoxWidget(BuildContext context, List<VideoModel> list) {
   List<Widget> results = [];
   for (int i = 0; i < list.length; i++) {
     results.add(InkWell(
-      onTap: () {},
+      onTap: () {
+        GoRouter.of(context).go('/detail/${list[i].id}');
+      },
       child: Container(
         width: 102,
         padding: EdgeInsets.only(right: 8),
