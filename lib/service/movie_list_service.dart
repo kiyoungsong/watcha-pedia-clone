@@ -1,20 +1,18 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:watcha_pedia_clone/model/movie.dart';
+import 'package:watcha_pedia_clone/model/video.dart';
 import 'package:watcha_pedia_clone/service/meta.dart';
 
-enum KeyEnum { nowPlaying, popular, topRated, upcoming }
-
 class MovieListService {
-  Future<Map<KeyEnum, List<MovieModel>>> getMovieList() async {
+  Future<Map<KeyEnum, List<VideoModel>>> getMovieList() async {
     final response = await Future.wait([
       get(Uri.parse("$baseUrl/3/movie/now_playing"), headers: baseHeaders),
       get(Uri.parse("$baseUrl/3/movie/popular"), headers: baseHeaders),
       get(Uri.parse("$baseUrl/3/movie/top_rated"), headers: baseHeaders),
       get(Uri.parse("$baseUrl/3/movie/upcoming"), headers: baseHeaders)
     ]);
-    Map<KeyEnum, List<MovieModel>> list = {
+    Map<KeyEnum, List<VideoModel>> list = {
       KeyEnum.nowPlaying: [],
       KeyEnum.popular: [],
       KeyEnum.topRated: [],
@@ -41,7 +39,7 @@ class MovieListService {
           keys = KeyEnum.nowPlaying; // 기본값으로 nowPlaying을 사용합니다.
       }
 
-      list[keys] = result.map((e) => MovieModel.fromJson(e)).toList();
+      list[keys] = result.map((e) => VideoModel.fromJson(e)).toList();
     }
 
     return list;
