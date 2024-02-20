@@ -11,13 +11,16 @@ class SaffoldWithHeaderNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isSearched =
         GoRouterState.of(context).uri.toString() == "/search";
-
+    final bool isDetail =
+        GoRouterState.of(context).uri.toString().contains("detail");
     return SafeArea(
         child: Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(73),
-        child: isSearched ? const SearchAppBar() : const MainBar(),
-      ),
+      appBar: isDetail
+          ? null
+          : PreferredSize(
+              preferredSize: const Size.fromHeight(73),
+              child: isSearched ? const SearchAppBar() : const MainBar(),
+            ),
       body: child,
       bottomNavigationBar: const Footer(),
     ));
