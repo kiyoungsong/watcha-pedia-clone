@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:watcha_pedia_clone/service/meta.dart';
 import 'package:watcha_pedia_clone/theme/colors.dart';
 
 class Footer extends StatelessWidget {
@@ -35,12 +36,11 @@ class Footer extends StatelessWidget {
   }
 
   Widget getIcon(String key, bool selected) {
-    String basePath = "assets/icons";
     return Container(
       padding: const EdgeInsets.only(bottom: 3),
       width: 24,
       child: SvgPicture.asset(
-        "$basePath/$key.svg",
+        "$baseAssetPath/$key.svg",
         colorFilter: ColorFilter.mode(
             selected ? Colors.black : baseGray, BlendMode.srcIn),
       ),
