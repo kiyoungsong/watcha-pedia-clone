@@ -34,8 +34,9 @@ class DetailModel {
   final DateTime releaseDate;
   final List<ProductionCountryModel> productionCountries;
   final int voteCount;
+  List<CastModel> cast = [];
 
-  const DetailModel({
+  DetailModel({
     required this.id,
     required this.title,
     required this.genres,
@@ -71,5 +72,37 @@ class DetailModel {
             json["production_countries"]
                 .map((x) => ProductionCountryModel.fromJson(x))),
         voteCount: json["vote_count"].toInt());
+  }
+}
+
+class CastModel {
+  final int id;
+  final String name;
+  final String? profilePath;
+  final int castId;
+  final String character;
+  final String creditId;
+
+  const CastModel({
+    required this.id,
+    required this.name,
+    required this.profilePath,
+    required this.castId,
+    required this.character,
+    required this.creditId,
+  });
+
+  static List<CastModel> fromJson(List<dynamic> jsonList) {
+    final result = jsonList
+        .map((e) => CastModel(
+              id: e['id'],
+              name: e['name'],
+              profilePath: e['profile_path'],
+              castId: e['cast_id'],
+              character: e['character'],
+              creditId: e['credit_id'],
+            ))
+        .toList();
+    return result;
   }
 }
