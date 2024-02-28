@@ -5,9 +5,18 @@ import 'dart:convert';
 
 class DetailService {
   Future<DetailModel> getDetail(int id) async {
-    final response = await get(Uri.parse("$baseUrl/3/movie/$id?language=ko-KR"),
+    final detailResponse = await get(
+        Uri.parse("$baseUrl/3/movie/$id?language=ko-KR"),
         headers: baseHeaders);
 
-    return DetailModel.fromJson(json.decode(response.body));
+    final detailData = DetailModel.fromJson(json.decode(detailResponse.body));
+
+    final castResponse = await get(
+        Uri.parse("$baseUrl/3/movie/$id/credits?language=ko-KR"),
+        headers: baseHeaders);
+    final castData = CastModel.fromJson(json.decode(castResponse.body)["cast"]);
+    detailData.cast = castData;
+
+    return detailData;
   }
 }
