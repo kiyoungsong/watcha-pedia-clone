@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:watcha_pedia_clone/component/comment_card.dart';
 import 'package:watcha_pedia_clone/model/detail.dart';
 import 'package:watcha_pedia_clone/service/detail_service.dart';
 import 'package:watcha_pedia_clone/service/meta.dart';
@@ -227,13 +228,6 @@ class _DetailScreenState extends State<DetailScreen> {
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                           getCarousel(info.cast, controller),
-                          // Stack(
-                          //   children: [
-                          //     ...getCredits(info.cast),
-                          //     Text("dd"),
-                          //     Text("123")
-                          //   ],
-                          // )
                         ]),
                   ),
                 ),
@@ -278,9 +272,36 @@ class _DetailScreenState extends State<DetailScreen> {
                           )
                         ],
                       )),
-                      Text("content")
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      SizedBox(
+                        height: 290,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: getReviews(info.review),
+                        ),
+                      ),
                     ],
                   )),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                  child: SizedBox(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "갤러리",
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          getCarousel(info.cast, controller),
+                        ]),
+                  ),
                 )
               ],
             );
@@ -385,6 +406,24 @@ List<Widget> getCredits(List<CastModel> list) {
         getCredit(i + 2 < list.length ? list[i + 2] : null, false)
       ],
     ));
+  }
+  return result;
+}
+
+List<Widget> getReviews(List<ReviewModel> list) {
+  List<Widget> result = [];
+
+  for (int i = 0; i < list.length; i++) {
+    result.add(CommentCard(
+        id: list[i].id,
+        detailModel: list[i].authorDetailModel,
+        content: list[i].content,
+        createdAt: list[i].createdAt));
+    if (i < list.length - 1) {
+      result.add(const SizedBox(
+        width: 20,
+      ));
+    }
   }
   return result;
 }
