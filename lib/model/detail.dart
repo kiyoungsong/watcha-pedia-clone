@@ -35,6 +35,7 @@ class DetailModel {
   final List<ProductionCountryModel> productionCountries;
   final int voteCount;
   List<CastModel> cast = [];
+  List<ReviewModel> review = [];
 
   DetailModel({
     required this.id,
@@ -104,5 +105,48 @@ class CastModel {
             ))
         .toList();
     return result;
+  }
+}
+
+class ReviewModel {
+  final String id;
+  final String content;
+  final AuthorDetailModel authorDetailModel;
+  final DateTime createdAt;
+
+  const ReviewModel({
+    required this.id,
+    required this.content,
+    required this.authorDetailModel,
+    required this.createdAt,
+  });
+  static List<ReviewModel> formJson(List<dynamic> jsonList) {
+    final result = jsonList
+        .map((e) => ReviewModel(
+            id: e["id"],
+            content: e["content"],
+            authorDetailModel: AuthorDetailModel(
+                username: e["author_details"]["username"],
+                avatarPath: e["author_details"]["avatar_path"],
+                rating: e["author_details"]["rating"]),
+            createdAt: DateTime.parse(e["created_at"])))
+        .toList();
+    return result;
+  }
+}
+
+class AuthorDetailModel {
+  final String username;
+  final String? avatarPath;
+  final double rating;
+
+  const AuthorDetailModel(
+      {required this.username, required this.avatarPath, required this.rating});
+
+  factory AuthorDetailModel.fromJson(Map<String, dynamic> json) {
+    return AuthorDetailModel(
+        username: json["username"],
+        avatarPath: json["avatar_path"],
+        rating: json["rating"]);
   }
 }
