@@ -1,3 +1,5 @@
+import 'package:watcha_pedia_clone/model/image.dart';
+
 class GenreModel {
   final int id;
   final String name;
@@ -36,6 +38,7 @@ class DetailModel {
   final int voteCount;
   List<CastModel> cast = [];
   List<ReviewModel> review = [];
+  List<ImageModel> images = [];
 
   DetailModel({
     required this.id,
