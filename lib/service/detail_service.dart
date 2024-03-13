@@ -1,5 +1,6 @@
 import 'package:http/http.dart';
 import 'package:watcha_pedia_clone/model/detail.dart';
+import 'package:watcha_pedia_clone/model/image.dart';
 import 'package:watcha_pedia_clone/service/meta.dart';
 import 'dart:convert';
 
@@ -13,6 +14,7 @@ class DetailService {
     final etcResponse = await Future.wait([
       get(Uri.parse("$baseUrl/3/movie/$id/credits"), headers: baseHeaders),
       get(Uri.parse("$baseUrl/3/movie/$id/reviews"), headers: baseHeaders),
+      get(Uri.parse("$baseUrl/3/movie/$id/images"), headers: baseHeaders),
     ]);
 
     for (int i = 0; i < etcResponse.length; i++) {
@@ -23,6 +25,9 @@ class DetailService {
         case 1:
           detailData.review =
               ReviewModel.formJson(json.decode(etcResponse[i].body)["results"]);
+        case 2:
+          detailData.images = ImageModel.fromJson(
+              json.decode(etcResponse[i].body)["backdrops"]);
       }
     }
 
