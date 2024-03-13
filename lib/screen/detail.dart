@@ -3,17 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watcha_pedia_clone/component/comment_card.dart';
+import 'package:watcha_pedia_clone/component/dialog/gallery.dart';
 import 'package:watcha_pedia_clone/model/detail.dart';
 import 'package:watcha_pedia_clone/service/detail_service.dart';
 import 'package:watcha_pedia_clone/service/meta.dart';
 
 class DetailScreen extends StatefulWidget {
+  const DetailScreen({super.key});
+
   @override
   State<DetailScreen> createState() => _DetailScreenState();
 }
 
 class _DetailScreenState extends State<DetailScreen> {
   CarouselController controller = CarouselController();
+  late PageController pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -217,7 +233,8 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                   child: SizedBox(
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,7 +249,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: SizedBox(
                       child: Column(
                     children: [
@@ -244,7 +261,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "코멘트",
                                     style: TextStyle(
                                         height: 1,
@@ -255,15 +272,15 @@ class _DetailScreenState extends State<DetailScreen> {
                                     width: 8,
                                   ),
                                   Text(
-                                    "15",
-                                    style: TextStyle(
+                                    info.review.length.toString(),
+                                    style: const TextStyle(
                                         height: 1,
                                         fontSize: 24,
                                         color: Color.fromRGBO(255, 47, 110, 1)),
                                   )
                                 ]),
                           ),
-                          Text(
+                          const Text(
                             "더보기",
                             style: TextStyle(
                                 height: 1,
@@ -289,7 +306,8 @@ class _DetailScreenState extends State<DetailScreen> {
                   height: 20,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                   child: SizedBox(
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -299,7 +317,46 @@ class _DetailScreenState extends State<DetailScreen> {
                             style: TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
-                          getCarousel(info.cast, controller),
+                          const SizedBox(
+                            height: 14,
+                          ),
+                          SizedBox(
+                            height: 100,
+                            child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: info.images.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () async {
+                                    pageController =
+                                        PageController(initialPage: index);
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return GalleryDialog(
+                                          controller: pageController,
+                                          images: info.images,
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: SizedBox(
+                                    child: Row(children: [
+                                      Image.network(
+                                          "https://media.themoviedb.org/t/p/original${info.images[index].filePath}",
+                                          width: 155,
+                                          fit: BoxFit.fitWidth),
+                                    ]),
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(
+                                  width: 10,
+                                );
+                              },
+                            ),
+                          ),
                         ]),
                   ),
                 )
@@ -425,5 +482,11 @@ List<Widget> getReviews(List<ReviewModel> list) {
       ));
     }
   }
+  return result;
+}
+
+List<Widget> getImages(List<dynamic> list) {
+  List<Widget> result = [];
+
   return result;
 }
