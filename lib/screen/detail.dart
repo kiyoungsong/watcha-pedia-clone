@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:watcha_pedia_clone/component/comment_card.dart';
 import 'package:watcha_pedia_clone/component/dialog/gallery.dart';
 import 'package:watcha_pedia_clone/model/detail.dart';
@@ -82,7 +84,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         padding: EdgeInsets.zero,
                                         constraints: const BoxConstraints(),
                                         onPressed: () {
-                                          GoRouter.of(context).go("/");
+                                          GoRouter.of(context).pop();
                                         },
                                         icon: SvgPicture.asset(
                                             "$baseAssetPath/arrow_left.svg")),
@@ -212,14 +214,16 @@ class _DetailScreenState extends State<DetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "\"${info.tagline}\"",
-                              style: const TextStyle(
-                                  color: Color.fromRGBO(140, 140, 140, 1)),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
+                            if (info.tagline != "")
+                              Text(
+                                "\"${info.tagline}\"",
+                                style: const TextStyle(
+                                    color: Color.fromRGBO(140, 140, 140, 1)),
+                              ),
+                            if (info.tagline != "")
+                              const SizedBox(
+                                height: 20,
+                              ),
                             Text(
                               info.overView,
                               style: const TextStyle(
@@ -359,6 +363,155 @@ class _DetailScreenState extends State<DetailScreen> {
                           ),
                         ]),
                   ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "동영상",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      SizedBox(
+                        height: 130,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: info.teasers.length,
+                          itemBuilder: (context, index) {
+                            String url =
+                                "https://www.youtube.com/watch?v=${info.teasers[index].key}";
+                            String? thumbnail = getYoutubeThumbnail(url);
+                            return GestureDetector(
+                              onTap: () async {
+                                // 링크
+                                Uri uri = Uri.parse(url);
+                                if (!await launchUrl(uri)) {
+                                  throw "링크로 이동할 수 없음";
+                                }
+                              },
+                              child: SizedBox(
+                                  child: thumbnail != null
+                                      ? Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Stack(
+                                                alignment: Alignment.center,
+                                                children: [
+                                                  Image.network(thumbnail,
+                                                      height: 100,
+                                                      width: 155,
+                                                      fit: BoxFit.fitWidth),
+                                                  SvgPicture.asset(
+                                                    "$baseAssetPath/player.svg",
+                                                    fit: BoxFit.fill,
+                                                    width: 24,
+                                                    height: 24,
+                                                  )
+                                                ]),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Text(info.teasers[index].type)
+                                          ],
+                                        )
+                                      : null),
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(
+                              width: 10,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "추천작품",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 24,
+                                crossAxisSpacing: 13,
+                                childAspectRatio: 0.45),
+                        itemBuilder: (context, index) {
+                          return SizedBox(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.network(
+                                    "https://media.themoviedb.org/t/p/original${info.similar[index].poster}",
+                                    fit: BoxFit.fitWidth),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  info.similar[index].title,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      height: 1.285,
+                                      color: Color.fromRGBO(41, 42, 50, 1)),
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                RichText(
+                                    text: TextSpan(children: [
+                                  const TextSpan(
+                                      text: "평점 ",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          height: 1.07,
+                                          color:
+                                              Color.fromRGBO(85, 87, 101, 1))),
+                                  const WidgetSpan(
+                                      child: Icon(
+                                    Icons.star,
+                                    size: 15,
+                                  )),
+                                  TextSpan(
+                                      text: info.similar[index].voteAverage
+                                          .toString(),
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          height: 1.07,
+                                          color:
+                                              Color.fromRGBO(85, 87, 101, 1))),
+                                ])),
+                                Text(DateFormat('yyyy-MM-dd')
+                                    .format(info.similar[index].releaseDate))
+                              ],
+                            ),
+                          );
+                        },
+                        itemCount: info.similar.length,
+                      )
+                    ],
+                  ),
                 )
               ],
             );
@@ -489,4 +642,13 @@ List<Widget> getImages(List<dynamic> list) {
   List<Widget> result = [];
 
   return result;
+}
+
+String? getYoutubeThumbnail(String videoUrl) {
+  final Uri? uri = Uri.tryParse(videoUrl);
+  if (uri == null) {
+    return null;
+  }
+
+  return 'https://img.youtube.com/vi/${uri.queryParameters['v']}/0.jpg';
 }

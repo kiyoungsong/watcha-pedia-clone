@@ -50,10 +50,12 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                   path: "/",
-                  builder: (context, state) => MovieScreen(key: state.pageKey)),
-              GoRoute(
-                  path: "/detail/:id",
-                  builder: (context, state) => DetailScreen()),
+                  builder: (context, state) => MovieScreen(key: state.pageKey),
+                  routes: [
+                    GoRoute(
+                        path: "detail/:id",
+                        builder: (context, state) => DetailScreen()),
+                  ]),
               GoRoute(
                 path: "/tv",
                 builder: (context, state) => TVScreen(key: state.pageKey),
