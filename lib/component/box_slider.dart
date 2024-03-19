@@ -75,7 +75,7 @@ List<Widget> makeBoxWidget(BuildContext context, List<VideoModel> list) {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Text(
@@ -87,18 +87,18 @@ List<Widget> makeBoxWidget(BuildContext context, List<VideoModel> list) {
                       height: 1.285,
                       color: Color.fromRGBO(41, 42, 50, 1)),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 RichText(
                     text: TextSpan(children: [
                   const TextSpan(
                       text: "평점 ",
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 14,
                           height: 1.07,
                           color: Color.fromRGBO(85, 87, 101, 1))),
-                  WidgetSpan(
+                  const WidgetSpan(
                       child: Icon(
                     Icons.star,
                     size: 15,
