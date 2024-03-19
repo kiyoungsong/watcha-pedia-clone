@@ -453,9 +453,8 @@ class _DetailScreenState extends State<DetailScreen> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
-                                mainAxisSpacing: 24,
                                 crossAxisSpacing: 13,
-                                childAspectRatio: 0.45),
+                                childAspectRatio: 0.42),
                         itemBuilder: (context, index) {
                           return SizedBox(
                             child: Column(
