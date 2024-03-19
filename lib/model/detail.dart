@@ -1,4 +1,6 @@
 import 'package:watcha_pedia_clone/model/image.dart';
+import 'package:watcha_pedia_clone/model/similar.dart';
+import 'package:watcha_pedia_clone/model/teaser.dart';
 
 class GenreModel {
   final int id;
@@ -39,6 +41,8 @@ class DetailModel {
   List<CastModel> cast = [];
   List<ReviewModel> review = [];
   List<ImageModel> images = [];
+  List<TeaserModel> teasers = [];
+  List<SimilarModel> similar = [];
 
   DetailModel({
     required this.id,

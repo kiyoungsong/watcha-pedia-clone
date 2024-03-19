@@ -22,8 +22,8 @@ class _GalleryDialogState extends State<GalleryDialog> {
 
   @override
   void dispose() {
-    super.dispose();
     pageController.dispose();
+    super.dispose();
   }
 
   @override
