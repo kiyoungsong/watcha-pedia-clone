@@ -440,7 +440,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "추천작품",
+                        "추천 작품",
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
@@ -501,8 +501,91 @@ class _DetailScreenState extends State<DetailScreen> {
                                           color:
                                               Color.fromRGBO(85, 87, 101, 1))),
                                 ])),
-                                Text(DateFormat('yyyy-MM-dd')
-                                    .format(info.similar[index].releaseDate))
+                                Text(info.similar[index].releaseDate != null
+                                    ? DateFormat('yyyy-MM-dd').format(
+                                        info.similar[index].releaseDate!)
+                                    : ""),
+                              ],
+                            ),
+                          );
+                        },
+                        itemCount: info.similar.length,
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "비슷한 작품",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 13,
+                                childAspectRatio: 0.42),
+                        itemBuilder: (context, index) {
+                          return SizedBox(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.network(
+                                    "https://media.themoviedb.org/t/p/original${info.similar[index].poster}",
+                                    fit: BoxFit.fitWidth),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  info.similar[index].title,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      height: 1.285,
+                                      color: Color.fromRGBO(41, 42, 50, 1)),
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                RichText(
+                                    text: TextSpan(children: [
+                                  const TextSpan(
+                                      text: "평점 ",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          height: 1.07,
+                                          color:
+                                              Color.fromRGBO(85, 87, 101, 1))),
+                                  const WidgetSpan(
+                                      child: Icon(
+                                    Icons.star,
+                                    size: 15,
+                                  )),
+                                  TextSpan(
+                                      text: info.similar[index].voteAverage
+                                          .toString(),
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          height: 1.07,
+                                          color:
+                                              Color.fromRGBO(85, 87, 101, 1))),
+                                ])),
+                                Text(info.similar[index].releaseDate != null
+                                    ? DateFormat('yyyy-MM-dd').format(
+                                        info.similar[index].releaseDate!)
+                                    : ""),
                               ],
                             ),
                           );
