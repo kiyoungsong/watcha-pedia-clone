@@ -1,5 +1,5 @@
 class SimilarModel {
-  final String poster;
+  final String? poster;
   final String title;
   final double voteAverage;
   final DateTime? releaseDate;

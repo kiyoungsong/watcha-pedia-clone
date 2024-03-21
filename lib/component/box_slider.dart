@@ -38,7 +38,7 @@ List<Widget> makeBoxWidget(BuildContext context, List<VideoModel> list) {
   for (int i = 0; i < list.length; i++) {
     results.add(InkWell(
       onTap: () {
-        GoRouter.of(context).go('/detail/${list[i].id}');
+        GoRouter.of(context).push('/detail/${list[i].id}');
       },
       child: Container(
         width: 102,
