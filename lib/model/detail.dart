@@ -43,6 +43,7 @@ class DetailModel {
   List<ImageModel> images = [];
   List<TeaserModel> teasers = [];
   List<SimilarModel> similar = [];
+  List<SimilarModel> recommendation = [];
 
   DetailModel({
     required this.id,
