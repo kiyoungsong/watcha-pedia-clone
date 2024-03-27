@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:watcha_pedia_clone/component/scaffold/scaffold_with_header_nav.dart';
 import 'package:watcha_pedia_clone/router/router_notifier.dart';
+import 'package:watcha_pedia_clone/screen/comment/index.dart';
 import 'package:watcha_pedia_clone/screen/detail/detail.dart';
 import 'package:watcha_pedia_clone/screen/login.dart';
 import 'package:watcha_pedia_clone/screen/movie.dart';
@@ -54,10 +55,14 @@ final routerProvider = Provider<GoRouter>((ref) {
               ),
               GoRoute(
                   path: "/detail/:id",
-                  builder: (context, state) => DetailScreen()),
+                  builder: (context, state) => const DetailScreen()),
               GoRoute(
                 path: "/tv",
                 builder: (context, state) => TVScreen(key: state.pageKey),
+              ),
+              GoRoute(
+                path: "/comments/:id",
+                builder: (context, state) => CommentScreen(),
               ),
               GoRoute(
                 path: "/search",
