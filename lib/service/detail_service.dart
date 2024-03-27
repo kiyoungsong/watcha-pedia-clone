@@ -19,6 +19,8 @@ class DetailService {
       get(Uri.parse("$baseUrl/3/movie/$id/images"), headers: baseHeaders),
       get(Uri.parse("$baseUrl/3/movie/$id/videos"), headers: baseHeaders),
       get(Uri.parse("$baseUrl/3/movie/$id/similar"), headers: baseHeaders),
+      get(Uri.parse("$baseUrl/3/movie/$id/recommendations"),
+          headers: baseHeaders)
     ]);
 
     for (int i = 0; i < etcResponse.length; i++) {
@@ -37,6 +39,9 @@ class DetailService {
               TeaserModel.formJson(json.decode(etcResponse[i].body)["results"]);
         case 4:
           detailData.similar = SimilarModel.fromJson(
+              json.decode(etcResponse[i].body)["results"]);
+        case 5:
+          detailData.recommendation = SimilarModel.fromJson(
               json.decode(etcResponse[i].body)["results"]);
       }
     }

@@ -1,11 +1,13 @@
 class SimilarModel {
-  final String poster;
+  final int id;
+  final String? poster;
   final String title;
   final double voteAverage;
   final DateTime? releaseDate;
 
   const SimilarModel(
-      {required this.poster,
+      {required this.id,
+      required this.poster,
       required this.title,
       required this.voteAverage,
       required this.releaseDate});
@@ -14,6 +16,7 @@ class SimilarModel {
 
     return base
         .map((json) => SimilarModel(
+            id: json["id"],
             poster: json["poster_path"],
             title: json["title"],
             voteAverage: json["vote_average"],
