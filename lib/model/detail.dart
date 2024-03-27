@@ -136,7 +136,7 @@ class ReviewModel {
             authorDetailModel: AuthorDetailModel(
                 username: e["author_details"]["username"],
                 avatarPath: e["author_details"]["avatar_path"],
-                rating: e["author_details"]["rating"]),
+                rating: e["author_details"]["rating"] ?? 0.0),
             createdAt: DateTime.parse(e["created_at"])))
         .toList();
     return result;
@@ -155,6 +155,6 @@ class AuthorDetailModel {
     return AuthorDetailModel(
         username: json["username"],
         avatarPath: json["avatar_path"],
-        rating: json["rating"]);
+        rating: json["rating"] ?? 0.0);
   }
 }
