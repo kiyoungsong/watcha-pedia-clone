@@ -12,7 +12,8 @@ class SaffoldWithHeaderNav extends StatelessWidget {
     final bool isSearched =
         GoRouterState.of(context).uri.toString() == "/search";
     final bool isDetail =
-        GoRouterState.of(context).uri.toString().contains("detail");
+        GoRouterState.of(context).uri.toString().contains("detail") ||
+            GoRouterState.of(context).uri.toString().contains("comments");
     return SafeArea(
         child: Scaffold(
       appBar: isDetail
