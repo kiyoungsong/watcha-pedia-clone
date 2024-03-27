@@ -49,6 +49,7 @@ class DetailScreen extends StatelessWidget {
                   cast: info.cast,
                 ),
                 DetailComment(
+                  id: id,
                   review: info.review,
                 ),
                 const SizedBox(

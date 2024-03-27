@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:watcha_pedia_clone/component/comment_card.dart';
 import 'package:watcha_pedia_clone/model/detail.dart';
 
 class DetailComment extends StatelessWidget {
+  final String id;
   final List<ReviewModel> review;
 
-  const DetailComment({super.key, required this.review});
+  const DetailComment({super.key, required this.review, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +43,18 @@ class DetailComment extends StatelessWidget {
                       )
                     ]),
               ),
-              const Text(
-                "더보기",
-                style: TextStyle(
-                    height: 1,
-                    fontSize: 16,
-                    color: Color.fromRGBO(255, 47, 110, 1)),
+              SizedBox(
+                child: GestureDetector(
+                    onTap: () {
+                      GoRouter.of(context).push("/comments/$id");
+                    },
+                    child: const Text(
+                      "더보기",
+                      style: TextStyle(
+                          height: 1,
+                          fontSize: 16,
+                          color: Color.fromRGBO(255, 47, 110, 1)),
+                    )),
               )
             ],
           )),

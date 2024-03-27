@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:watcha_pedia_clone/model/similar.dart';
 
@@ -30,58 +31,62 @@ class DetailSimilar extends StatelessWidget {
             itemBuilder: (context, index) {
               final poster = similar[index].poster;
               return SizedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    poster != null
-                        ? Image.network(
-                            "https://media.themoviedb.org/t/p/original$poster",
-                            fit: BoxFit.fitWidth)
-                        : Expanded(
-                            child: Container(
-                            color: Colors.grey[300],
-                          )),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      similar[index].title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontSize: 14,
-                          height: 1.285,
-                          color: Color.fromRGBO(41, 42, 50, 1)),
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    RichText(
-                        text: TextSpan(children: [
-                      const TextSpan(
-                          text: "평점 ",
-                          style: TextStyle(
-                              fontSize: 14,
-                              height: 1.07,
-                              color: Color.fromRGBO(85, 87, 101, 1))),
-                      const WidgetSpan(
-                          child: Icon(
-                        Icons.star,
-                        size: 15,
-                      )),
-                      TextSpan(
-                          text: similar[index].voteAverage.toString(),
+                child: GestureDetector(
+                    onTap: () {
+                      GoRouter.of(context).push('/detail/${similar[index].id}');
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        poster != null
+                            ? Image.network(
+                                "https://media.themoviedb.org/t/p/original$poster",
+                                fit: BoxFit.fitWidth)
+                            : Expanded(
+                                child: Container(
+                                color: Colors.grey[300],
+                              )),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          similar[index].title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                               fontSize: 14,
-                              height: 1.07,
-                              color: Color.fromRGBO(85, 87, 101, 1))),
-                    ])),
-                    Text(similar[index].releaseDate != null
-                        ? DateFormat('yyyy-MM-dd')
-                            .format(similar[index].releaseDate!)
-                        : ""),
-                  ],
-                ),
+                              height: 1.285,
+                              color: Color.fromRGBO(41, 42, 50, 1)),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        RichText(
+                            text: TextSpan(children: [
+                          const TextSpan(
+                              text: "평점 ",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  height: 1.07,
+                                  color: Color.fromRGBO(85, 87, 101, 1))),
+                          const WidgetSpan(
+                              child: Icon(
+                            Icons.star,
+                            size: 15,
+                          )),
+                          TextSpan(
+                              text: similar[index].voteAverage.toString(),
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  height: 1.07,
+                                  color: Color.fromRGBO(85, 87, 101, 1))),
+                        ])),
+                        Text(similar[index].releaseDate != null
+                            ? DateFormat('yyyy-MM-dd')
+                                .format(similar[index].releaseDate!)
+                            : ""),
+                      ],
+                    )),
               );
             },
             itemCount: similar.length,

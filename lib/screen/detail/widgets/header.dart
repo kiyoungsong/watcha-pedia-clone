@@ -57,7 +57,11 @@ class DetailHeader extends StatelessWidget {
                             padding: EdgeInsets.zero,
                             constraints: const BoxConstraints(),
                             onPressed: () {
-                              GoRouter.of(context).pop();
+                              if (GoRouter.of(context).canPop()) {
+                                GoRouter.of(context).pop();
+                              } else {
+                                GoRouter.of(context).go("/");
+                              }
                             },
                             icon: SvgPicture.asset(
                                 "$baseAssetPath/arrow_left.svg")),
