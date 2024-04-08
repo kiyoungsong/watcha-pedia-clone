@@ -27,111 +27,68 @@ class DetailHeader extends StatelessWidget {
     return (SizedBox(
       width: double.maxFinite,
       height: 550,
-      child: Stack(children: [
-        SizedBox(
+      child: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: NetworkImage(
+                      "https://media.themoviedb.org/t/p/original$backdropPath"),
+                  fit: BoxFit.cover)),
           height: double.infinity,
-          child: backdropPath != null
-              ? Image.network(
-                  "https://media.themoviedb.org/t/p/original$backdropPath",
-                  fit: BoxFit.cover,
-                )
-              : Container(
-                  color: Colors.grey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20, bottom: 15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                          fontSize: 36,
+                          height: 1.2,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      originTitle,
+                      style: const TextStyle(
+                          color: Colors.white, fontSize: 14, height: 1.2),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      "${releaseDate.year} • ${productionCountries.last.country}",
+                      style: const TextStyle(
+                          color: Colors.white, fontSize: 14, height: 1.2),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      genres.map((e) => e.name).join(", "),
+                      style: const TextStyle(
+                          color: Colors.white, fontSize: 14, height: 1.2),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      "${runTime ~/ 60}시간 ${runTime % 60}분",
+                      style: const TextStyle(
+                          color: Colors.white, fontSize: 14, height: 1.2),
+                    ),
+                  ],
                 ),
-        ),
-        SizedBox(
-            height: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: IconButton(
-                            padding: EdgeInsets.zero,
-                            constraints: const BoxConstraints(),
-                            onPressed: () {
-                              if (GoRouter.of(context).canPop()) {
-                                GoRouter.of(context).pop();
-                              } else {
-                                GoRouter.of(context).go("/");
-                              }
-                            },
-                            icon: SvgPicture.asset(
-                                "$baseAssetPath/arrow_left.svg")),
-                      ),
-                      SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: IconButton(
-                            padding: EdgeInsets.zero,
-                            constraints: const BoxConstraints(),
-                            onPressed: () {
-                              print("공유");
-                            },
-                            icon: SvgPicture.asset("$baseAssetPath/share.svg")),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, bottom: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
-                            fontSize: 36,
-                            height: 1.2,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Text(
-                        originTitle,
-                        style: const TextStyle(
-                            color: Colors.white, fontSize: 14, height: 1.2),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        "${releaseDate.year} • ${productionCountries.last.country}",
-                        style: const TextStyle(
-                            color: Colors.white, fontSize: 14, height: 1.2),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        genres.map((e) => e.name).join(", "),
-                        style: const TextStyle(
-                            color: Colors.white, fontSize: 14, height: 1.2),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        "${runTime ~/ 60}시간 ${runTime % 60}분",
-                        style: const TextStyle(
-                            color: Colors.white, fontSize: 14, height: 1.2),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ))
-      ]),
+              )
+            ],
+          )),
     ));
   }
 }
