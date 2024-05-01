@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:watcha_pedia_clone/component/scaffold/scaffold_with_header_nav.dart';
 import 'package:watcha_pedia_clone/router/router_notifier.dart';
 import 'package:watcha_pedia_clone/screen/comment/index.dart';
+import 'package:watcha_pedia_clone/screen/comment_dtail/index.dart';
 import 'package:watcha_pedia_clone/screen/detail/detail.dart';
 import 'package:watcha_pedia_clone/screen/login.dart';
 import 'package:watcha_pedia_clone/screen/movie.dart';
@@ -62,7 +63,11 @@ final routerProvider = Provider<GoRouter>((ref) {
               ),
               GoRoute(
                 path: "/comments/:id",
-                builder: (context, state) => CommentScreen(),
+                builder: (context, state) => const CommentScreen(),
+              ),
+              GoRoute(
+                path: "/comments/detail/:id",
+                builder: (context, state) => CommentDetailScreen(),
               ),
               GoRoute(
                 path: "/search",
