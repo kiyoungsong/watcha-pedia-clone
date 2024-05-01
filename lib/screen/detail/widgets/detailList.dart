@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:watcha_pedia_clone/model/detail.dart';
+import 'package:watcha_pedia_clone/model/info.dart';
 import 'package:watcha_pedia_clone/screen/detail/widgets/comment.dart';
 import 'package:watcha_pedia_clone/screen/detail/widgets/credit.dart';
 import 'package:watcha_pedia_clone/screen/detail/widgets/gallery.dart';
@@ -75,8 +76,13 @@ class _DetailListState extends State<DetailList> {
                   cast: widget.info.cast,
                 ),
                 DetailComment(
-                  id: id,
                   review: widget.info.review,
+                  movieInfo: MovieInfo(
+                      id: widget.info.id.toString(),
+                      title: widget.info.title,
+                      posterPath: widget.info.posterPath,
+                      releaseDate: widget.info.releaseDate,
+                      isMovie: true),
                 ),
                 const SizedBox(
                   height: 20,

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watcha_pedia_clone/component/comment_card.dart';
 import 'package:watcha_pedia_clone/model/detail.dart';
+import 'package:watcha_pedia_clone/model/info.dart';
 
 class DetailComment extends StatelessWidget {
-  final String id;
   final List<ReviewModel> review;
+  final MovieInfo movieInfo;
 
-  const DetailComment({super.key, required this.review, required this.id});
+  const DetailComment(
+      {super.key, required this.review, required this.movieInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,8 @@ class DetailComment extends StatelessWidget {
               SizedBox(
                 child: GestureDetector(
                     onTap: () {
-                      GoRouter.of(context).push("/comments/$id");
+                      GoRouter.of(context)
+                          .push("/comments/${movieInfo.id}", extra: movieInfo);
                     },
                     child: const Text(
                       "더보기",
@@ -65,7 +68,7 @@ class DetailComment extends StatelessWidget {
             height: 290,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              children: getReviews(review),
+              children: getReviews(review, movieInfo),
             ),
           ),
         ],
@@ -74,15 +77,17 @@ class DetailComment extends StatelessWidget {
   }
 }
 
-List<Widget> getReviews(List<ReviewModel> list) {
+List<Widget> getReviews(List<ReviewModel> list, MovieInfo movieInfo) {
   List<Widget> result = [];
 
   for (int i = 0; i < list.length; i++) {
     result.add(CommentCard(
-        id: list[i].id,
-        detailModel: list[i].authorDetailModel,
-        content: list[i].content,
-        createdAt: list[i].createdAt));
+      id: list[i].id,
+      detailModel: list[i].authorDetailModel,
+      content: list[i].content,
+      createdAt: list[i].createdAt,
+      movieInfo: movieInfo,
+    ));
     if (i < list.length - 1) {
       result.add(const SizedBox(
         width: 20,

@@ -4,12 +4,15 @@ import 'package:go_router/go_router.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:watcha_pedia_clone/component/comment_card.dart';
 import 'package:watcha_pedia_clone/model/detail.dart';
+import 'package:watcha_pedia_clone/model/info.dart';
 import 'package:watcha_pedia_clone/service/meta.dart';
 
 class CommentContent extends StatefulWidget {
   final List<ReviewModel> review;
+  final MovieInfo movieInfo;
 
-  const CommentContent({super.key, required this.review});
+  const CommentContent(
+      {super.key, required this.review, required this.movieInfo});
   @override
   State<CommentContent> createState() => _CommentContentState();
 }
@@ -67,6 +70,7 @@ class _CommentContentState extends State<CommentContent> {
                           color: Color.fromRGBO(0, 0, 0, 0.08), width: 2.0)))),
           pinned: true,
           backgroundColor: Colors.white,
+          surfaceTintColor: Colors.white,
           toolbarHeight: _isTop ? 91 : 45,
           centerTitle: true,
           title: _isTop
@@ -96,7 +100,7 @@ class _CommentContentState extends State<CommentContent> {
         SliverStack(children: [
           SliverToBoxAdapter(
             child: Column(
-              children: getReviews(widget.review),
+              children: getReviews(widget.review, widget.movieInfo),
             ),
           )
         ]),
@@ -105,7 +109,7 @@ class _CommentContentState extends State<CommentContent> {
   }
 }
 
-List<Widget> getReviews(List<ReviewModel> list) {
+List<Widget> getReviews(List<ReviewModel> list, MovieInfo movieInfo) {
   List<Widget> result = [];
 
   for (int i = 0; i < list.length; i++) {
@@ -115,10 +119,12 @@ List<Widget> getReviews(List<ReviewModel> list) {
       ));
     }
     result.add(CommentCard(
-        id: list[i].id,
-        detailModel: list[i].authorDetailModel,
-        content: list[i].content,
-        createdAt: list[i].createdAt));
+      id: list[i].id,
+      detailModel: list[i].authorDetailModel,
+      content: list[i].content,
+      createdAt: list[i].createdAt,
+      movieInfo: movieInfo,
+    ));
     result.add(const SizedBox(
       height: 20,
     ));
