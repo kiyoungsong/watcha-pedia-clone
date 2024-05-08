@@ -8,6 +8,7 @@ import 'package:watcha_pedia_clone/screen/comment_dtail/index.dart';
 import 'package:watcha_pedia_clone/screen/detail/detail.dart';
 import 'package:watcha_pedia_clone/screen/login.dart';
 import 'package:watcha_pedia_clone/screen/movie.dart';
+import 'package:watcha_pedia_clone/screen/person_detail/index.dart';
 import 'package:watcha_pedia_clone/screen/search.dart';
 import 'package:watcha_pedia_clone/screen/tv.dart';
 
@@ -68,6 +69,10 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: "/comments/detail/:id",
                 builder: (context, state) => CommentDetailScreen(),
+              ),
+              GoRoute(
+                path: "/person/detail/:id",
+                builder: (context, state) => PersonDetailScreen(),
               ),
               GoRoute(
                 path: "/search",
