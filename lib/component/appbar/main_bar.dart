@@ -11,7 +11,7 @@ class MainBar extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Container(
           height: double.infinity,
-          padding: EdgeInsets.fromLTRB(15, 20, 15, 20),
+          padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
           child: Row(
             children: [
               MouseRegion(
@@ -32,7 +32,7 @@ class MainBar extends StatelessWidget {
               Container(
                 width: 2,
                 height: 16,
-                color: Color.fromARGB(255, 209, 209, 210),
+                color: const Color.fromARGB(255, 209, 209, 210),
               ),
               const SizedBox(
                 width: 10,

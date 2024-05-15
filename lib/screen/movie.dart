@@ -25,7 +25,7 @@ class _MovieScreenState extends State<MovieScreen> {
       future: movieList,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(
             child: Text('Error: ${snapshot.error}'),

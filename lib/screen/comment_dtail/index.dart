@@ -5,6 +5,8 @@ import 'package:watcha_pedia_clone/model/info.dart';
 import 'package:watcha_pedia_clone/service/meta.dart';
 
 class CommentDetailScreen extends StatelessWidget {
+  const CommentDetailScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final CommentDetailInfo reviewModel =
@@ -43,7 +45,7 @@ class CommentDetailScreen extends StatelessWidget {
           )),
       SliverToBoxAdapter(
           child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -56,7 +58,7 @@ class CommentDetailScreen extends StatelessWidget {
                       width: 18,
                       height: 18,
                       child: CircleAvatar(
-                        backgroundColor: Color.fromRGBO(217, 217, 217, 1),
+                        backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
                         child: reviewModel.authorDetailModel.avatarPath != null
                             ? Image.network(
                                 "https://media.themoviedb.org/t/p/original${reviewModel.authorDetailModel.avatarPath}",
@@ -96,7 +98,7 @@ class CommentDetailScreen extends StatelessWidget {
                   ),
                   Text(
                     reviewModel.title,
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(
                     height: 4,

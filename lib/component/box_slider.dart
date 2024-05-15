@@ -19,15 +19,15 @@ class BoxSlider extends StatelessWidget {
               fontSize: 22,
               height: 1.25,
             )),
-        SizedBox(height: 15),
-        Container(
+        const SizedBox(height: 15),
+        SizedBox(
           height: 211,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: makeBoxWidget(context, list),
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
       ]),
     );
   }
@@ -42,7 +42,7 @@ List<Widget> makeBoxWidget(BuildContext context, List<VideoModel> list) {
       },
       child: Container(
         width: 102,
-        padding: EdgeInsets.only(right: 8),
+        padding: const EdgeInsets.only(right: 8),
         child: Align(
             alignment: Alignment.centerLeft,
             child: Column(

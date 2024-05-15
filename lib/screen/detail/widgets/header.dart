@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:watcha_pedia_clone/model/detail.dart';
-import 'package:watcha_pedia_clone/service/meta.dart';
 
 class DetailHeader extends StatelessWidget {
   final String? backdropPath;

@@ -26,7 +26,7 @@ class FooterIcon extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, color: getTextColor(currentUrl, pathKey)),
-            SizedBox(
+            const SizedBox(
               height: 6,
             ),
             Text(title, style: getStyle(currentUrl, pathKey))
@@ -37,7 +37,7 @@ class FooterIcon extends StatelessWidget {
   }
 
   TextStyle getStyle(String url, List<String> key) {
-    TextStyle commonStyle = TextStyle(
+    TextStyle commonStyle = const TextStyle(
         fontSize: 11.5, height: 1.2, color: Color.fromARGB(255, 186, 186, 195));
     return key.contains(url)
         ? commonStyle.copyWith(color: Colors.black)
@@ -47,6 +47,6 @@ class FooterIcon extends StatelessWidget {
   Color getTextColor(String url, List<String> key) {
     return key.contains(url)
         ? Colors.black
-        : Color.fromARGB(255, 186, 186, 195);
+        : const Color.fromARGB(255, 186, 186, 195);
   }
 }

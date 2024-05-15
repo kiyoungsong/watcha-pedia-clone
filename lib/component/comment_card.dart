@@ -23,15 +23,15 @@ class CommentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Container(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         width: 350,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            color: Color.fromRGBO(242, 242, 242, 1)),
+            color: const Color.fromRGBO(242, 242, 242, 1)),
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.only(bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -41,7 +41,8 @@ class CommentCard extends StatelessWidget {
                         width: 30,
                         height: 30,
                         child: CircleAvatar(
-                          backgroundColor: Color.fromRGBO(217, 217, 217, 1),
+                          backgroundColor:
+                              const Color.fromRGBO(217, 217, 217, 1),
                           child: detailModel.avatarPath != null
                               ? Image.network(
                                   "https://media.themoviedb.org/t/p/original${detailModel.avatarPath}",
@@ -65,7 +66,7 @@ class CommentCard extends StatelessWidget {
                     ]),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     height: 26,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),

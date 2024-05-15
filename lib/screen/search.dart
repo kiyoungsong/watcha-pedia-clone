@@ -15,7 +15,7 @@ class SearchScreen extends ConsumerWidget {
       child: searchList.when(
           data: (searchList) {
             List<KeywordModel> result = searchList.map((e) => e).toList();
-            if (result.length > 0) {
+            if (result.isNotEmpty) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
