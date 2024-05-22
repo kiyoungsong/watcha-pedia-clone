@@ -1,8 +1,8 @@
+import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-import 'package:watcha_pedia_clone/component/text/custom_ellipsis_text.dart';
 import 'package:watcha_pedia_clone/model/person.dart';
 import 'package:watcha_pedia_clone/service/meta.dart';
 
@@ -16,15 +16,18 @@ class PersonDetailContent extends StatefulWidget {
   State<StatefulWidget> createState() => _PersonDetailContentState();
 }
 
-class _PersonDetailContentState extends State<PersonDetailContent> {
+class _PersonDetailContentState extends State<PersonDetailContent>
+    with SingleTickerProviderStateMixin {
   ScrollController scrollController = ScrollController();
   bool _isTop = true;
   bool isOver = false;
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     scrollController.addListener(handleScrollEvent);
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   void handleScrollEvent() {
@@ -40,6 +43,10 @@ class _PersonDetailContentState extends State<PersonDetailContent> {
   void dispose() {
     super.dispose();
     scrollController.removeListener(handleScrollEvent);
+  }
+
+  void _onTabTapped(int index) {
+    setState(() {});
   }
 
   @override
@@ -87,56 +94,68 @@ class _PersonDetailContentState extends State<PersonDetailContent> {
                   ),
                 ),
                 Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 20),
-                    child: CustomEllipsisText(
-                      text: widget.info.biography,
-                      ellipsis: '... 더보기',
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                  child: ExtendedText(
+                    widget.info.biography,
+                    maxLines: 3,
+                    overflowWidget: TextOverflowWidget(
+                      position: TextOverflowPosition.end,
+                      align: TextOverflowAlign.center,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          const Text('\u2026 '),
+                          InkWell(
+                            child: const Text(
+                              '더보기',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            onTap: () {
+                              _showPopup(context, widget.info.name,
+                                  widget.info.biography);
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 12,
+                  color: const Color.fromRGBO(217, 217, 217, 1),
+                ),
+                Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(15),
+                    child: IntrinsicHeight(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            color: Colors.blue,
+                            child: TabBar(
+                              controller: _tabController,
+                              tabs: [
+                                Tab(icon: Icon(Icons.home), text: 'Home'),
+                                Tab(icon: Icon(Icons.star), text: 'Favorites'),
+                              ],
+                              onTap: _onTabTapped,
+                            ),
+                          ),
+                          SizedBox(
+                            height: double.maxFinite,
+                            child: TabBarView(
+                              controller: _tabController,
+                              children: [
+                                Text("movie"),
+                                Text("tv"),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     )),
-                Text(widget.info.biography),
-                const Text("하단6"),
-                const Text("상단7"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
-                const Text("상단"),
-                const Text("하단"),
               ],
             ),
           ),
@@ -203,6 +222,50 @@ class _PersonDetailContentState extends State<PersonDetailContent> {
         width: 84,
         height: 84,
       ),
+    );
+  }
+
+  void _showPopup(BuildContext context, String name, String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            height: 400,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      name,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: Icon(Icons.close))
+                  ],
+                ),
+                const SizedBox(height: 15),
+                SizedBox(
+                  height: 300,
+                  child: SingleChildScrollView(
+                    child: Text(content),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
